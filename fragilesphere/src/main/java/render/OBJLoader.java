@@ -13,6 +13,7 @@ import model.RawModel;
 
 public class OBJLoader {
 	public static RawModel loadObjModel(String fileName, Loader loader) {
+	  
 		InputStreamReader fr = new InputStreamReader(OBJLoader.class.getClassLoader().getResourceAsStream(fileName + ".obj"), StandardCharsets.UTF_8);
 
 		BufferedReader reader = new BufferedReader(fr);
