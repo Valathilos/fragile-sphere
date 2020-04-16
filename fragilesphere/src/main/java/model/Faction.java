@@ -21,9 +21,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Faction {
-  private static final Logger log = LoggerFactory.getLogger(Faction.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Faction.class);
 
-  private static Map<String, Faction> factions = new HashMap<String, Faction>();
+  private static Map<String, Faction> FACTIONS = new HashMap<String, Faction>();
   //    private List<Planet> ownedPlanets = new ArrayList<Planet>();
   private String name;
   private String shortName;
@@ -58,7 +58,7 @@ public class Faction {
   }
 
   public static Faction getFaction(String hint) {
-    return factions.get(hint);
+    return FACTIONS.get(hint);
   }
 
   //	public void capture(Planet planet) {
@@ -95,7 +95,7 @@ public class Faction {
         public void endElement(String uri, String localName, String qName) throws SAXException {
           if (qName.equalsIgnoreCase("ShortName")) {
             faction.setShortName(value);
-            factions.put(value, faction);
+            FACTIONS.put(value, faction);
           }
 
           if (qName.equalsIgnoreCase("FullName")) {
@@ -131,7 +131,6 @@ public class Faction {
             faction.setIsClan(value);
           }
 
-          //					log.debug("Parsing Element: " + qName);
         }
 
         public void characters(char[] ch, int start, int length) throws SAXException {
@@ -140,9 +139,9 @@ public class Faction {
       };
       InputStream stream = Faction.class.getClassLoader().getResourceAsStream("data/universe/factions.xml");
       parser.parse(stream, handler);
-      return new ArrayList<Faction>(factions.values());
+      return new ArrayList<Faction>(FACTIONS.values());
     } catch (ParserConfigurationException | SAXException | IOException e) {
-      log.error(MarkerFactory.getMarker("Error"), "Problem initialising faction list", e);
+      LOGGER.error(MarkerFactory.getMarker("Error"), "Problem initialising faction list", e);
     } 
 
     return Collections.emptyList();

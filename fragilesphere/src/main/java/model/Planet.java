@@ -26,15 +26,14 @@ import entities.Entity;
 import render.Loader;
 
 public class Planet extends Entity{
-  private static final Logger log = LoggerFactory.getLogger(Planet.class);
-//      Logger.getLogger(Game.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Planet.class);
 
   private String name;
   private String description;
   private Vector3f location;
   private List<Faction> owner = new ArrayList<Faction>();
   private List<Event> events = new ArrayList<Event>();
-  
+
 
   public Planet(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
     super(model, position, rotX, rotY, rotZ, scale);
@@ -54,8 +53,8 @@ public class Planet extends Entity{
         private List<Event> events = new ArrayList<Event>();
         private Instant eventDate;
         private String eventDetail;
-        
-        
+
+
         //				private boolean bIgnoreElement;
         private float xcoord = 0.0f;
         private float ycoord = 0.0f;
@@ -70,7 +69,9 @@ public class Planet extends Entity{
           //if end of planet data, add to list of planets
           if (qName.equalsIgnoreCase("planet")) {
             float[] colours = {0, 0, 0};
-            log.debug(name + ": " + faction);
+            
+            LOGGER.debug(name + ": " + faction);
+            
             Faction owner = null;
             if (faction.contains(",")) {
               StringTokenizer st = new StringTokenizer(faction, ",");
@@ -105,7 +106,7 @@ public class Planet extends Entity{
           if (qName.equalsIgnoreCase("name")) {
             name = value;
           }
-          
+
           if (qName.equalsIgnoreCase("desc")) {
             desc = value;
           }
@@ -114,14 +115,14 @@ public class Planet extends Entity{
             try {
               xcoord = Float.parseFloat(value);
             } catch (NumberFormatException e) {
-              log.error(MarkerFactory.getMarker("Error"), "xcood could not be understood", e);
+              LOGGER.error(MarkerFactory.getMarker("Error"), "xcoord could not be understood", e);
             }
           }
           if (qName.equalsIgnoreCase("ycood")) {
             try {
               ycoord = Float.parseFloat(value);
             } catch (NumberFormatException e) {
-              log.error(MarkerFactory.getMarker("Error"), "ycood could not be understood", e);
+              LOGGER.error(MarkerFactory.getMarker("Error"), "ycoord could not be understood", e);
             }
           }
 
@@ -139,7 +140,7 @@ public class Planet extends Entity{
 
           if (qName.equalsIgnoreCase("factionChange")) {
             Event event = Event.recordEvent(eventDate, eventDetail); 
-            log.debug("Faction Change: {} : {}", event.getOccurredAt(),event.getDetail() );
+            LOGGER.debug("Faction Change: {} : {}", event.getOccurredAt(),event.getDetail() );
             events.add(event);
           }
 
@@ -149,13 +150,15 @@ public class Planet extends Entity{
           value = new String(ch, start, length);	
         }
       };
-      InputStream stream = Faction.class.getClassLoader().getResourceAsStream("data/universe/planets.xml");
+      
+      InputStream stream = Planet.class.getClassLoader().getResourceAsStream("data/universe/planets.xml");
       parser.parse(stream, handler);
       return planets;
+      
     } catch (ParserConfigurationException | SAXException | IOException e) {
-      log.error(MarkerFactory.getMarker("Error"), "Problem loading planets", e);
+      LOGGER.error(MarkerFactory.getMarker("Error"), "Problem loading planets", e);
     }
-    
+
     return Collections.emptyList();
   }
 
@@ -211,14 +214,14 @@ public class Planet extends Entity{
   }
 
   public void addOwner(Faction faction) {
-    
+
     if (!owner.contains(faction)) {
       owner.add(faction);
     }
   }
 
   public void addEvent(Event event) {
-      events.add(event);
+    events.add(event);
   }
 
   public void removeOwner(Faction faction) {
