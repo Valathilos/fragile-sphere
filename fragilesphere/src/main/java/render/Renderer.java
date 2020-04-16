@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import entities.Entity;
-import managers.DisplayManager;
+import manager.DisplayManager;
 import model.RawModel;
 import model.TexturedModel;
 import toolbox.Maths;

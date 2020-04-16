@@ -3,7 +3,7 @@ package guis.buttons;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
-import managers.DisplayManager;
+import manager.DisplayManager;
 import render.Loader;
 
 public class ExitButton extends AbstractButton {

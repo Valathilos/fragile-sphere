@@ -3,18 +3,16 @@ package guis.buttons;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
-import fontMeshCreator.FontType;
-import fontMeshCreator.GUIText;
-import managers.DisplayManager;
+import manager.DisplayManager;
 import render.Loader;
 
 public class StartButton extends AbstractButton {
-	private GUIText text;
+//	private GUIText text;
 
 	public StartButton(Loader loader, String texture, Vector2f position, Vector2f scale) {
 		super(loader, "textures/" + texture, position, scale);
-		FontType font = new FontType(loader.loadTexture("fonts/calibri.png"), "fonts/calibri.fnt");
-		text = new GUIText("Start", 1, font, position, 1f, true);
+//		FontType font = new FontType(loader.loadTexture("fonts/calibri.png"), "fonts/calibri.fnt");
+//		text = new GUIText("Start", 1, font, position, 1f, true);
 		
 	}
 

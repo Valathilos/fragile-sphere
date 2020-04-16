@@ -1,4 +1,4 @@
-package managers;
+package manager;
 
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
@@ -9,6 +9,7 @@ import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
@@ -29,10 +30,15 @@ public class DisplayManager {
   private static GLFWCursorPosCallback mouseCallback;
   private static int mouseY;
   private static int mouseX;
+  
+  private static int frames;
+  private static long time;
+  private static String title;
 
 
   public static void createDisplay(String windowTitle) {
     glfwSetErrorCallback(GLFWErrorCallback.createPrint());
+    title = windowTitle;
 
     //initialise GLFW
     if (!glfwInit()) {
@@ -68,7 +74,8 @@ public class DisplayManager {
     glfwShowWindow(win);
 
     GL.createCapabilities();
-
+    
+    time = System.currentTimeMillis();
   }
 
   public static void destroyDisplay() {
@@ -120,5 +127,12 @@ public class DisplayManager {
 
   public static void updateDisplay() {
     glfwSwapBuffers(win);
+    
+    frames++;
+    if (System.currentTimeMillis() > time + 1000) {
+      glfwSetWindowTitle(win, title + " (FPS: " + frames +")" );
+      time = System.currentTimeMillis();
+      frames = 0;        
+    }
   }
 }
