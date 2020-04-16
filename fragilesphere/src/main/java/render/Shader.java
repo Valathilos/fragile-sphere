@@ -133,6 +133,7 @@ public class Shader {
     if (location != -1) {
       FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
       value.get(buffer);
+      //TODO: Fix bug here
       glUniformMatrix4fv(location, false, buffer);
     }
   }

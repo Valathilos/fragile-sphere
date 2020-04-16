@@ -5,8 +5,8 @@ import java.util.List;
 import org.joml.Vector2f;
 
 import guis.GuiTexture;
-import manager.DisplayManager;
-import render.Loader;
+import render.engine.DisplayManager;
+import render.engine.Loader;
 
 public abstract class AbstractButton implements IButton {
 	private GuiTexture guiTexture;

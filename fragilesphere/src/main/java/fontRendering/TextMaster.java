@@ -8,7 +8,7 @@ import java.util.Map;
 import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
 import fontMeshCreator.TextMeshData;
-import render.Loader;
+import render.engine.Loader;
 
 public class TextMaster {
 	private static Loader loader;

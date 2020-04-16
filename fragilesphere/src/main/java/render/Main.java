@@ -14,11 +14,12 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.opengl.GL11;
 
 import guis.menus.MainMenu;
-import managers.DisplayManager;
+import render.engine.DisplayManager;
 
-public class Main {
-  //  private static Logger log = Logger.getLogger(Main.class);
+public class Main implements Runnable{
 
+  public Thread main;
+  
   private static enum State {
     INTRO, MAIN_MENU, GAME;
   }
@@ -30,18 +31,20 @@ public class Main {
   private PlanetRenderer renderer;
   private Shader shader;
 
-  private void run(){
+  private void start() {
+    main = new Thread(this, "main");
+    main.start();    
+  }
+  
+  public void run(){
     init();
 
     loop();
-
-    //		glfwDestroyWindow(win);
-
   }
 
   private void init() {
     DisplayManager.createDisplay("Fragile Sphere");
-
+    
     shader = new Shader("galaxy");
 
     renderer = new PlanetRenderer(shader);
@@ -144,7 +147,8 @@ public class Main {
 
   public static void main(String[] args) {
     //	  PropertyConfigurator.configure("log4j.xml");
-    new Main().run();
+    new Main().start();
   }
+
 
 }

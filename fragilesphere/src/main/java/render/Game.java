@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import model.Faction;
 import model.Planet;
+import render.engine.Loader;
 
 public class Game {
   private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
@@ -15,7 +16,7 @@ public class Game {
   private List<Planet> planets;
   private PlanetRenderer renderer;
   private Loader loader;
-  //	private Shader shader;
+//  private Shader shader;
 
   public Game(PlanetRenderer renderer) {
     this.renderer = renderer;

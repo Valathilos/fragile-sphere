@@ -23,7 +23,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import entities.Entity;
-import render.Loader;
+import render.engine.Loader;
+import render.engine.RawModel;
 
 public class Planet extends Entity{
   private static final Logger LOGGER = LoggerFactory.getLogger(Planet.class);
@@ -87,6 +88,7 @@ public class Planet extends Entity{
               owner = Faction.getFaction(faction);
               colours = owner.getColour();
             }
+            
             //Set it's location						
             Vector3f location = new Vector3f(xcoord/2000, ycoord/2000, 1.0f);
             RawModel model = loader.loadUntexturedModelToVao(new float[]{location.x, location.y, location.z}, new int[]{0}, colours);

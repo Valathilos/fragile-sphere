@@ -11,7 +11,7 @@ import guis.GuiTexture;
 import guis.buttons.AbstractButton;
 import guis.buttons.ExitButton;
 import guis.buttons.StartButton;
-import render.Loader;
+import render.engine.Loader;
 
 public class MainMenu {
 
