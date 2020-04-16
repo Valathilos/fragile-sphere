@@ -7,12 +7,12 @@
 	<name>Fragile Sphere</name>
 
 	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<lwjgl.version>3.1.1</lwjgl.version>
-		<log4j.version>1.2.17</log4j.version>
-		<slf4j-api.version>1.7.12</slf4j-api.version>
-		<slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
+		<maven.compiler.source>14</maven.compiler.source>
+		<maven.compiler.target>14</maven.compiler.target>
+		<lwjgl.version>3.2.3</lwjgl.version>
+		<log4j.version>2.13.1</log4j.version>
+		<slf4j-api.version>2.0.0-alpha1</slf4j-api.version>
+		<slf4j-log4j12.version>2.0.0-alpha1</slf4j-log4j12.version>
 	</properties>
 	
 	<build>
@@ -193,8 +193,8 @@
 		  <version>${slf4j-log4j12.version}</version>
         </dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
 			<version>${log4j.version}</version>
 			<type>jar</type>
 		</dependency>
