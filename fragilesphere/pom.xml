@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.valathilos</groupId>
@@ -13,20 +14,13 @@
 		<log4j.version>2.13.1</log4j.version>
 		<slf4j-api.version>2.0.0-alpha1</slf4j-api.version>
 		<slf4j-log4j12.version>2.0.0-alpha1</slf4j-log4j12.version>
+		<joml.version>1.9.24</joml.version>
 	</properties>
-	
+
 	<build>
-		<!--  <sourceDirectory>src</sourceDirectory>  -->
-		<!-- 
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		 -->
+		<!-- <sourceDirectory>src</sourceDirectory> -->
+		<!-- <resources> <resource> <directory>src</directory> <excludes> <exclude>**/*.java</exclude> 
+			</excludes> </resource> </resources> -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -112,22 +106,29 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-		   <groupId>org.slf4j</groupId>
-		   <artifactId>slf4j-api</artifactId>
-		   <version>${slf4j-api.version}</version>
-		   <type>jar</type>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+			<type>jar</type>
 		</dependency>
 		<dependency>
-		  <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-		  <version>${slf4j-log4j12.version}</version>
-        </dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j12.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>${log4j.version}</version>
 			<type>jar</type>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.joml/joml -->
+		<dependency>
+			<groupId>org.joml</groupId>
+			<artifactId>joml</artifactId>
+			<version>${joml.version}</version>
+		</dependency>
+
 	</dependencies>
 	<profiles>
 		<profile>

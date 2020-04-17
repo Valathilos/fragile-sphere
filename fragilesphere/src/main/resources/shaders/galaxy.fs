@@ -1,9 +1,9 @@
 #version 430 core
 
-in vec4 fragmentColour;
+in vec3 fragmentColour;
 //in vec2 pass_textures;
 
-out vec4 out_Colour;
+out vec3 out_Colour;
 
 //uniform sampler2D sampler;
 

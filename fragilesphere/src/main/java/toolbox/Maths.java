@@ -11,8 +11,7 @@ public class Maths {
 	public static Matrix4f createTransformationMatrix (Vector2f translation, Vector2f scale) {
 		Matrix4f matrix = new Matrix4f();
 		matrix.identity();
-		matrix.translate(translation, matrix);
-		matrix.scale(new Vector3f(scale.x, scale.y, 1f), matrix);
+		matrix.translate(translation.x, translation.y, 0.0f, matrix).scale(new Vector3f(scale.x, scale.y, 1f), matrix);
 		
 		return matrix;
 	}

@@ -34,6 +34,18 @@ public abstract class ShaderProgram {
     bindAttributes();
     getAllUniformLocations();
   }
+  
+  public ShaderProgram(InputStream vertexFile, InputStream fragmentFile){
+    vertexShaderId = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
+    fragmentShaderId = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
+    programId = GL20.glCreateProgram();
+    GL20.glAttachShader(programId, vertexShaderId);
+    GL20.glAttachShader(programId, fragmentShaderId);
+    GL20.glLinkProgram(programId);
+    GL20.glValidateProgram(programId);
+    bindAttributes();
+    getAllUniformLocations();
+  }
 
   protected abstract void getAllUniformLocations();
 
@@ -81,7 +93,7 @@ public abstract class ShaderProgram {
   }
 
   protected void loadMatrix(int location, Matrix4f matrix){
-    matrix.store(matrixBuffer);
+    matrix.set(matrixBuffer);
     matrixBuffer.flip();
     GL20.glUniformMatrix4fv(location, false, matrixBuffer);
   }
@@ -90,6 +102,7 @@ public abstract class ShaderProgram {
     StringBuilder shaderSource = new StringBuilder();
     try{
       InputStream stream = ClassLoader.getSystemResourceAsStream(file);
+      LOGGER.debug(file);
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
       String line;
       while((line = reader.readLine()) != null){
@@ -98,6 +111,30 @@ public abstract class ShaderProgram {
       reader.close();
     }catch(IOException e){
       LOGGER.error("Problem loading Shader: " + file, e);
+      System.exit(-1);
+    }
+    
+    int shaderID = GL20.glCreateShader(type);
+    GL20.glShaderSource(shaderID, shaderSource);
+    GL20.glCompileShader(shaderID);
+    if(GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
+      LOGGER.error("Could not compile shader!: " + GL20.glGetShaderInfoLog(shaderID, 500));
+      System.exit(-1);
+    }
+    return shaderID;
+  }
+  
+  private static int loadShader(InputStream stream, int type){
+    StringBuilder shaderSource = new StringBuilder();
+    try{
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+      String line;
+      while((line = reader.readLine()) != null){
+        shaderSource.append(line).append("//\n");
+      }
+      reader.close();
+    }catch(IOException e){
+      LOGGER.error("Problem loading Shader", e);
       System.exit(-1);
     }
     

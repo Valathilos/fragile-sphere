@@ -12,11 +12,11 @@ import render.engine.Loader;
 public class Game {
   private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
-//  private List<Faction> factions;
+  //  private List<Faction> factions;
   private List<Planet> planets;
   private PlanetRenderer renderer;
   private Loader loader;
-//  private Shader shader;
+  //  private Shader shader;
 
   public Game(PlanetRenderer renderer) {
     this.renderer = renderer;
@@ -52,18 +52,18 @@ public class Game {
   public void render(Shader shader, Camera camera) {
     renderer.prepare();
 
-    
+
     for (Planet planet: planets) {
       camera.move();
       shader.start();
-      
-      //			planet.increasePosition(0, 0, .01f);
 
-//      renderer.render(planet, shader, camera);
-//      renderer.render(planets.get(1500), shader, camera);
+      planet.increasePosition(0, 0, .01f);
+
+      renderer.render(planet, shader, camera);
+      renderer.render(planets.get(1500), shader, camera);
       shader.stop();
     }
-    
+
   }
 
   public void cleanUp() {

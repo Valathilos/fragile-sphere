@@ -146,7 +146,6 @@ public class Main implements Runnable{
   }
 
   public static void main(String[] args) {
-    //	  PropertyConfigurator.configure("log4j.xml");
     new Main().start();
   }
 

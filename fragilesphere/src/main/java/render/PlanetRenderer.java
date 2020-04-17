@@ -39,9 +39,11 @@ public class PlanetRenderer extends Renderer {
     Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), 
         entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 
-    //		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
+    Matrix4f viewMatrix = Maths.createViewMatrix(camera);
+
     shader.setUniform("transformationMatrix", transformationMatrix);
-    //		shader.setUniform("viewMatrix", viewMatrix );
+
+    shader.setUniform("viewMatrix", viewMatrix );
 
     //		GL13.glActiveTexture(GL_TEXTURE0);
     //		GL11.glBindTexture(GL_TEXTURE_2D, texturedModel.getTexture().getId());
