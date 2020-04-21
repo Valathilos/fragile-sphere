@@ -41,9 +41,9 @@ public abstract class ShaderProgram {
     programId = GL20.glCreateProgram();
     GL20.glAttachShader(programId, vertexShaderId);
     GL20.glAttachShader(programId, fragmentShaderId);
+    bindAttributes();
     GL20.glLinkProgram(programId);
     GL20.glValidateProgram(programId);
-    bindAttributes();
     getAllUniformLocations();
   }
 
@@ -85,10 +85,10 @@ public abstract class ShaderProgram {
   }
 
   protected void loadBoolean(int location, boolean value){
-    float toLoad = 0;
-    if(value){
-      toLoad = 1;
-    }
+    float toLoad = value ? 1 : 0;
+//    if(value) {
+//      toLoad = 1;
+//    }
     GL20.glUniform1f(location, toLoad);
   }
 
@@ -99,29 +99,7 @@ public abstract class ShaderProgram {
   }
 
   private static int loadShader(String file, int type){
-    StringBuilder shaderSource = new StringBuilder();
-    try{
-      InputStream stream = ClassLoader.getSystemResourceAsStream(file);
-      LOGGER.debug(file);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-      String line;
-      while((line = reader.readLine()) != null){
-        shaderSource.append(line).append("//\n");
-      }
-      reader.close();
-    }catch(IOException e){
-      LOGGER.error("Problem loading Shader: " + file, e);
-      System.exit(-1);
-    }
-    
-    int shaderID = GL20.glCreateShader(type);
-    GL20.glShaderSource(shaderID, shaderSource);
-    GL20.glCompileShader(shaderID);
-    if(GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
-      LOGGER.error("Could not compile shader!: " + GL20.glGetShaderInfoLog(shaderID, 500));
-      System.exit(-1);
-    }
-    return shaderID;
+    return loadShader(ClassLoader.getSystemResourceAsStream(file), type);
   }
   
   private static int loadShader(InputStream stream, int type){

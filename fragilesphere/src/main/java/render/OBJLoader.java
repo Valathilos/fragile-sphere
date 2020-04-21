@@ -9,8 +9,8 @@ import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import model.RawModel;
 import render.engine.Loader;
-import render.engine.RawModel;
 
 public class OBJLoader {
 	public static RawModel loadObjModel(String fileName, Loader loader) {

@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import entities.Entity;
+import model.RawModel;
 import model.TexturedModel;
 import render.Camera;
 import render.Shader;
@@ -22,7 +23,7 @@ public class Renderer {
   public Renderer(Shader shader) {
     createProjectionMatrix();
     shader.start();
-    shader.setUniform("projectionMatrix", projectionMatrix);
+    shader.loadProjectionMatrix(projectionMatrix);
     shader.stop();
   }
 

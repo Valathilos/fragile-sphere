@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -23,8 +25,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import entities.Entity;
+import render.Game;
 import render.engine.Loader;
-import render.engine.RawModel;
+import textures.ModelTexture;
 
 public class Planet extends Entity{
   private static final Logger LOGGER = LoggerFactory.getLogger(Planet.class);
@@ -40,11 +43,15 @@ public class Planet extends Entity{
     super(model, position, rotX, rotY, rotZ, scale);
   }
 
-  public static List<Planet> load(final Loader loader) {
+  public static List<Planet> load(Game game) {
     final List<Planet> planets = new ArrayList<Planet> ();
+    final Loader loader = game.getLoader();
     try {
+
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser parser = factory.newSAXParser();
+
+      ModelTexture texture = new ModelTexture(loader.loadTexture("textures/planet.jpg")); 
 
       DefaultHandler handler = new DefaultHandler() {
         private String name;
@@ -55,8 +62,6 @@ public class Planet extends Entity{
         private Instant eventDate;
         private String eventDetail;
 
-
-        //				private boolean bIgnoreElement;
         private float xcoord = 0.0f;
         private float ycoord = 0.0f;
         private final float[] CONFLICT_COLOR = {6.0f, 6.0f, 6.0f};
@@ -69,10 +74,13 @@ public class Planet extends Entity{
 
           //if end of planet data, add to list of planets
           if (qName.equalsIgnoreCase("planet")) {
+
+            if ("Oshika".contentEquals(name)) {
+              LOGGER.debug("Processing : {}", name);
+            }
+            
             float[] colours = {0, 0, 0};
-            
-            LOGGER.debug(name + ": " + faction);
-            
+
             Faction owner = null;
             if (faction.contains(",")) {
               StringTokenizer st = new StringTokenizer(faction, ",");
@@ -88,11 +96,13 @@ public class Planet extends Entity{
               owner = Faction.getFaction(faction);
               colours = owner.getColour();
             }
-            
+
             //Set it's location						
-            Vector3f location = new Vector3f(xcoord/2000, ycoord/2000, 1.0f);
+            Vector3f location = new Vector3f(xcoord, ycoord, 1.0f);
             RawModel model = loader.loadUntexturedModelToVao(new float[]{location.x, location.y, location.z}, new int[]{0}, colours);
-            TexturedModel texturedModel = new TexturedModel(model, null);
+//            RawModel model = loader.loadToVao(new float[]{location.x, location.y, location.z}, textureCoords, indices)(new float[]{location.x, location.y, location.z}, new int[]{0}, colours);
+
+            TexturedModel texturedModel = new TexturedModel(model, texture);
 
             Planet planet = new Planet(texturedModel, location, 0,0,0,1);
             planet.setLocation(location);
@@ -142,7 +152,7 @@ public class Planet extends Entity{
 
           if (qName.equalsIgnoreCase("factionChange")) {
             Event event = Event.recordEvent(eventDate, eventDetail); 
-            LOGGER.debug("Faction Change: {} : {}", event.getOccurredAt(),event.getDetail() );
+            //            LOGGER.debug("Faction Change: {} : {}", event.getOccurredAt(),event.getDetail() );
             events.add(event);
           }
 
@@ -152,11 +162,14 @@ public class Planet extends Entity{
           value = new String(ch, start, length);	
         }
       };
-      
+
       InputStream stream = Planet.class.getClassLoader().getResourceAsStream("data/universe/planets.xml");
       parser.parse(stream, handler);
-      return planets;
       
+      LOGGER.debug("Total Planets : {}", planets.size());
+      
+      return planets;
+
     } catch (ParserConfigurationException | SAXException | IOException e) {
       LOGGER.error(MarkerFactory.getMarker("Error"), "Problem loading planets", e);
     }

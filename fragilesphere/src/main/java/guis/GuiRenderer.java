@@ -8,8 +8,8 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import model.RawModel;
 import render.engine.Loader;
-import render.engine.RawModel;
 import toolbox.Maths;
 
 public class GuiRenderer {

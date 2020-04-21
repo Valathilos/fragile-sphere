@@ -2,8 +2,14 @@
 <planets>
 	<planet>
 		<name>A Place</name>
+		 
+		<xcood>0.5</xcood>
+		<ycood>0.5</ycood>
+		
+		<!-- 
 		<xcood>-123.764</xcood>
 		<ycood>272.182</ycood>
+		-->		
 		<faction>UND</faction>
 		<factionChange>
 			<date>2235-01-01</date>

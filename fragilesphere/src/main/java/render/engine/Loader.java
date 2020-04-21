@@ -11,9 +11,11 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import model.RawModel;
 import textures.Texture;
 
 public class Loader {
+
   private List<Integer> vaos = new ArrayList<Integer>();
   private List<Integer> vbos = new ArrayList<Integer>();
   private List<Integer> textures = new ArrayList<Integer>();
@@ -49,7 +51,8 @@ public class Loader {
     int vaoId = createVAO();
     bindIndicesBuffer(indices);
     storeDataInAttributeList(0, 3, positions);
-    storeDataInAttributeList(1, 3, colours);
+//    storeDataInAttributeList(1, 3, indices);
+    storeDataInAttributeList(2, 3, colours);
 
     unbindVAO();
     return new RawModel(vaoId, indices.length);

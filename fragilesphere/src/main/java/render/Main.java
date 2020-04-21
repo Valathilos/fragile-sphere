@@ -45,7 +45,7 @@ public class Main implements Runnable{
   private void init() {
     DisplayManager.createDisplay("Fragile Sphere");
     
-    shader = new Shader("galaxy");
+    shader = new Shader("planet");
 
     renderer = new PlanetRenderer(shader);
 
@@ -111,7 +111,8 @@ public class Main implements Runnable{
           renderer.prepare();
 
           shader.start();
-          shader.setUniform("sampler", 0);
+//          shader.setUniform("textureSampler", 0);
+//          shader.setUniform("sampler", 0);
           //							shader.setUniform("projection", target);
           //							tex.bind(0);
           game.render(shader, camera);

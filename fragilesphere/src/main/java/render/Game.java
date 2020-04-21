@@ -16,7 +16,10 @@ public class Game {
   private List<Planet> planets;
   private PlanetRenderer renderer;
   private Loader loader;
-  //  private Shader shader;
+
+  public Loader getLoader() {
+    return loader;
+  }
 
   public Game(PlanetRenderer renderer) {
     this.renderer = renderer;
@@ -31,12 +34,12 @@ public class Game {
 
   private void loadPlanets() {
     LOGGER.debug("Load Planets");
-    planets = Planet.load(loader);
+    planets = Planet.load(this);
   }
 
   public boolean startNewGame() {
     LOGGER.debug("Start New Game");
-    //		this.shader = new Shader("galaxy");
+
     loadFactions();
     loadPlanets();
 
@@ -52,23 +55,28 @@ public class Game {
   public void render(Shader shader, Camera camera) {
     renderer.prepare();
 
+    camera.move();
+    shader.start();
 
-    for (Planet planet: planets) {
-      camera.move();
-      shader.start();
+    planets.get(0).increasePosition(0, 0, .01f);
 
-      planet.increasePosition(0, 0, .01f);
+    renderer.render(planets.get(0), shader, camera);
+    shader.stop();
 
-      renderer.render(planet, shader, camera);
-      renderer.render(planets.get(1500), shader, camera);
-      shader.stop();
-    }
+//        for (Planet planet: planets) {
+//          planet.increasePosition(0, 0, .01f);
+//          camera.move();
+//          shader.start();
+//          shader.loadViewMatrix(camera);
+//    
+//    
+//          renderer.render(planet, shader, camera);
+//          shader.stop();
+//        }
 
   }
 
   public void cleanUp() {
     loader.cleanUp();
-    //		shader.cleanUp();
-
   }
 }
